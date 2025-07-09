@@ -20,7 +20,7 @@ public class WalletServiceimpl implements WalletService {
 
     @Override
     public Wallet updateWallet(int user_id, String action, int amount) {
-        Wallet wallet = walletRepository.findById(user_id).orElseThrow(() -> new RuntimeException("Wallet not found for user " + user_id));;
+        Wallet wallet = walletRepository.findById(user_id).orElse( walletRepository.save(new Wallet(user_id, 0)));
 
         if ("debit".equalsIgnoreCase(action)) {
             if (wallet.getBalance() < amount) {
